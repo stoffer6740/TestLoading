@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en" ng-app="uniCRM">
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="height=device-height, width=device-width" />
+  <title>uniCRM | Activities</title>  
+  
+  <link rel="stylesheet" href="onsenui.css">  
+  <link rel="stylesheet" href="onsen-css-components.css">  
+  <link rel="stylesheet" href="app.css"/>
+
+  <script src="angular/angular.js"></script>    
+  <script src="onsenui.js"></script>
+  <script src="jquery-1.11.1.min.js"></script>
+  <script src="jquery.localize.min.js"></script> 
+  <script src="fastclick.js"></script> 
+
+  <script src="cordova.js"></script>
+  <script src="app.js"></script>
+  <script src="main.js"></script>
+  
+    <script>
+      var module = angular.module('uniCRM', ['onsen']);
+      module.controller('AppController', function($scope) { });
+      module.controller('PageController', function($scope) {
+        ons.ready(function() {
+
+          console.log("ons.ready");
+        });
+      });
+    </script>
+  </head>
+
+
+
+
+<body ng-controller="AppController">
+  <ons-navigator var="navigator">
+    <ons-page ng-controller="PageController">
+      <ons-sliding-menu
+        menu-page="menu.html" main-page="activity.html" side="left"
+        type="reveal" max-slide-distance="85%" swipable="true" var="menu">
+      </ons-sliding-menu>
+
+        <script type="text/ons-template" id="menu.html">
+            <ons-page style="background-color: white">
+
+              <ons-list>
+                <ons-list-item 
+                  modifier="chevron"
+                  ng-click="ons.slidingMenu.setMainPage('activity.html', {closeMenu: true})"
+                  onclick="getActivities();">
+
+                  <i class="fa fa-th-list fa-lg" style="color: #666"></i> &nbsp; <p class="menuItem" data-localize="menuItem1">View activities</p>
+                </ons-list-item>
+
+                <ons-list-item 
+                  modifier="chevron"
+                  ng-click="ons.slidingMenu.setMainPage('create.html', {closeMenu: true})"
+                  onclick="createPage();">
+
+                  <i class="fa fa-plus-circle fa-lg" style="color: #666"></i> &nbsp; <p class="menuItem" data-localize="menuItem2">Create activities</p>
+                </ons-list-item>
+
+                <ons-list-item 
+                  modifier="chevron"
+                  ng-click="ons.slidingMenu.setMainPage('contacts.html', {closeMenu: true})"
+                  onclick="contactPage();">
+
+                  <i class="fa fa-users fa-lg" style="color: #666"></i> &nbsp; <p class="menuItem" data-localize="menuItem3">Show contacts</p>
+                </ons-list-item>
+
+                <ons-list-item 
+                  modifier="chevron"
+                  ng-click="ons.slidingMenu.setMainPage('about.html', {closeMenu: true})"
+                  onclick="changePage();">
+
+                  <i class="fa fa-info fa-lg" style="color: #666"></i> &nbsp; <p class="menuItem" data-localize="menuItem4">About us</p>
+                </ons-list-item>
+
+                <ons-list-item 
+                  modifier="chevron"
+                  ng-click="ons.slidingMenu.setMainPage('test.html', {closeMenu: true})"
+                  onclick="changePage();">
+
+                  <i class="fa fa-info fa-lg" style="color: #666"></i> &nbsp; <p class="menuItem" data-localize="menuItem6">Test</p>
+                </ons-list-item>
+
+                <ons-list-item 
+                  modifier="chevron"
+                  ng-click="ons.slidingMenu.setMainPage('language.html', {closeMenu: true})"
+                  onclick="changePage();">
+
+                  <i class="fa fa-language fa-lg" style="color: #666"></i> &nbsp; <p class="menuItem" data-localize="menuLang">Language</p>
+                </ons-list-item>
+              </ons-list>
+
+            </ons-page>
+
+          </script>
+
+
+
+
+
+          <!-- Views activities for the person logged in. -->
+          <script type="text/ons-template" id="activity.html">
+              <div class="overlay-wrapper">
+                 <div class="overlay">
+                  <p data-localize="overlay-activities">Fetching activities</p>
+                  <i class="fa fa-spinner fa-spin fa-5x"></i>
+                  </div>
+                </div>
+            <ons-page>
+              <ons-toolbar>
+                <div class="left logo">
+                <ons-toolbar-button ng-click="menu.toggleMenu()">
+                  <img src="images/icons/icon_29749.png" title="Unicorn" height="39px" class="ng-scope" style="height: 60px; margin-top: 10px;" />
+                </ons-toolbar-button>
+                </div>
+                <div class="center logo">
+                  <h1>uniCRM</h1>
+                </div>
+                <div class="right logo center">
+                  <ons-toolbar-button ng-click="menu.toggleMenu()">
+                    <ons-icon icon="bars openMenu"></ons-icon>
+                  </ons-toolbar-button>
+                </div>
+              </ons-toolbar>
+
+              <ons-row class="margin padding">
+                <ons-col>
+                  <div>
+                    <ons-row id="result" class="row ons-row-inner">
+                    </ons-row>
+                  </div>
+                </ons-col>
+              </ons-row>
+            </ons-page>
+          </script>
+
+
+
+
+
+          <!-- Shows the create activity page -->
+          <script type="text/ons-template" id="create.html">
+              <div class="overlay-wrapper">
+                 <div class="overlay">
+                  <p data-localize="overlay-create">Fetching data</p>
+                  <i class="fa fa-spinner fa-spin fa-5x"></i>
+                  </div>
+                </div>
+            <ons-page>
+              <ons-toolbar>
+                <div class="left logo">
+                <ons-toolbar-button ng-click="menu.toggleMenu()">
+                  <img src="images/icons/icon_29749.png" title="Unicorn" height="39px" class="ng-scope" style="height: 60px; margin-top: 10px;" />
+                </ons-toolbar-button>
+                </div>
+                <div class="center logo">
+                  <h1>uniCRM</h1>
+                </div>
+                <div class="right logo center">
+                  <ons-toolbar-button ng-click="menu.toggleMenu()">
+                    <ons-icon icon="bars openMenu"></ons-icon>
+                  </ons-toolbar-button>
+                </div>
+              </ons-toolbar>
+
+                <ons-row class="margin padding">
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createType">Type</label>
+                    <select id="type" class="input-ddl" name="type">
+                    </select>
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createAmount">Failed</label>
+                    <input type="number" id="amount" placeholder="dkr." class="input" />
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createProbability">Probability</label>
+                    <select id="createProbability" class="input-ddl" name="createProbability">
+                      <option value="0">0%</option>
+                      <option value="0,25%">25%</option>
+                      <option value="0,5">50%</option>
+                      <option value="0,75">75%</option>
+                      <option value="1,0">100%</option>
+                    </select>
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createDate">Date</label>
+                      <input id="date" type="date" class="input" name="date">
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createTime">Time</label>
+                    <input type="time" id="time" placeholder="00:00" class="input" />
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createEstimate">Estimated time</label>
+                    <input type="number" id="estimate" class="input" /></input>
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createWorker">Co-worker</label>
+                    <select id="wid" class="input-ddl" name="wid">
+                    </select>
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createCompany">Company</label>
+                    <select id="cid" class="input-ddl" name="contacts" onchange="getPersons();">
+                    </select>
+                  </ons-row>
+                  
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createPerson">Person</label>
+                    <select id="person" class="input-ddl" name="person">
+                    </select>
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createActivityName">Activity name</label>
+                    <input type="text" id="createActivityName" class="input" />
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <label class="input-label" data-localize="createNote">Notes</label>
+                    <input type="textarea" style="height:100px;" id="createNote" class="input" rows="5" cols="100" />
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <ons-button modifier="large" style="width:100%;" value="Create activity" onclick="createActivity();" data-localize="createActivity">Create activity</ons-button>
+                  </ons-row>
+
+                  <ons-row class="create-row">
+                    <ons-button modifier="large" style="width:100%;" value="Create activity" onclick="cancelCreateActivity();" data-localize="cancel">Cancel</ons-button>
+                  </ons-row>
+                    
+                </ons-row>
+            </ons-page>
+         </script>
+
+
+
+
+
+          <!-- Shows the contacts page -->
+          <script type="text/ons-template" id="contacts.html">
+            <div class="overlay-wrapper">
+             <div class="overlay">
+              <p data-localize="overlay-contacts">Fetching contacts</p>
+              <i class="fa fa-spinner fa-spin fa-5x"></i>
+              </div>
+            </div>
+            <ons-page>
+              <ons-toolbar>
+                <div class="left logo">
+                <ons-toolbar-button ng-click="menu.toggleMenu()">
+                  <img src="images/icons/icon_29749.png" title="Unicorn" height="39px" class="ng-scope" style="height: 60px; margin-top: 10px;" />
+                </ons-toolbar-button>
+                </div>
+                <div class="center logo">
+                  <h1>uniCRM</h1>
+                </div>
+                <div class="right logo center">
+                  <ons-toolbar-button ng-click="menu.toggleMenu()">
+                    <ons-icon icon="bars openMenu"></ons-icon>
+                  </ons-toolbar-button>
+                </div>
+              </ons-toolbar>
+
+              <ons-row class="margin padding">
+               <label class="input-label" data-localize="contactFilter">Filter contacts (phone, name or email)</label>
+               <input id="filter" placeholder="Add list.js" type="text" class="input" name="filter" style="margin-bottom: 10px;">
+
+                <ons-col class="activity-col" id="result">
+
+                </ons-col>
+              </ons-row>
+            </ons-page>
+          </script>
+
+          <!-- Test page -->
+          <script type="text/ons-template" id="test.html">
+            <div class="overlay-wrapper">
+             <div class="overlay">
+              Fetching activities</br>
+              <i class="fa fa-spinner fa-spin fa-5x"></i>
+              </div>
+            </div>
+            <ons-page>
+              <ons-toolbar>
+                <div class="left logo">
+                <ons-toolbar-button ng-click="menu.toggleMenu()">
+                  <img src="images/icons/icon_29749.png" title="Unicorn" height="39px" class="ng-scope" style="height: 60px; margin-top: 10px;" />
+                </ons-toolbar-button>
+                </div>
+                <div class="center logo">
+                  <h1>uniCRM</h1>
+                </div>
+                <div class="right logo center">
+                  <ons-toolbar-button ng-click="menu.toggleMenu()">
+                    <ons-icon icon="bars openMenu"></ons-icon>
+                  </ons-toolbar-button>
+                </div>
+              </ons-toolbar>
+              <ons-row class="margin padding">
+                <ons-col class="activity-col">
+
+                  <ons-row class="activity-row">
+                    <ons-row>
+                      <ons-col width="50%"> 
+                        Webitall
+                      </ons-col>
+                      <ons-col width="50%"> 
+                        Home@webitall.dk
+                      </ons-col>
+                      <ons-col width="50%">
+                      <a href="tel:31951115" style="text-decoration: blink;">
+                      <span class="label label-success label-contact">
+                      <icon class="fa fa-phone fa-lg fa-fw"></icon>
+                        Call contact
+                        </span>
+                        </a>
+                      </ons-col>
+                      <ons-col width="50%">
+                      <span class="label label-blue label-contact">
+                      <icon class="fa fa-envelope-square fa-lg fa-fw"></icon>
+                        send email
+                        </span>
+                      </ons-col>
+                    </ons-row>
+                  </ons-row>
+
+                  <ons-row class="activity-row">
+                    <ons-row>
+                      <ons-col width="55%"> 
+                        Webitall
+                      </ons-col>
+                      <ons-col width="45%">
+                      <a href="tel:31951115" style="text-decoration: blink;">
+                      <span class="label label-success label-contact">
+                      <icon class="fa fa-phone fa-lg fa-fw"></icon>
+                        +45 31 95 11 15
+                        </span>
+                        </a>
+                      </ons-col>
+                    </ons-row>
+                    <ons-col width="55%"> 
+                        Home@webitall.dk
+                      </ons-col>
+                      <ons-col width="45%">
+                      <span class="label label-blue label-contact">
+                      <icon class="fa fa-envelope-square fa-lg fa-fw"></icon>
+                        send email
+                        </span>
+                      </ons-col>
+                  </ons-row>
+
+                  <ons-row class="activity-row">
+                    <ons-row>
+                      <ons-col width="50%"> 
+                        Webitall
+                      </ons-col>
+                      <ons-col width="50%"> 
+                        Home@webitall.dk
+                      </ons-col>
+                      <ons-col width="50%">
+                      <a href="tel:31951115" style="text-decoration: blink;">
+                      <span class="label label-success label-contact">
+                      <icon class="fa fa-phone fa-lg fa-fw"></icon>
+                        Call contact
+                        </span>
+                        </a>
+                      </ons-col>
+                      <ons-col width="50%">
+                      <span class="label label-blue label-contact">
+                      <icon class="fa fa-envelope-square fa-lg fa-fw"></icon>
+                        send email
+                        </span>
+                      </ons-col>
+                    </ons-row>
+                  </ons-row>
+
+                  <ons-row class="activity-row">
+                    <ons-row>
+                      <ons-col width="55%"> 
+                        Webitall
+                      </ons-col>
+                      <ons-col width="45%" style="margin-bottom: 15px;">
+                      <a href="tel:31951115" style="text-decoration: blink;">
+                      <span class="label label-success label-contact">
+                      <icon class="fa fa-phone fa-lg fa-fw"></icon>
+                        Call contact
+                        </span>
+                        </a>
+                      </ons-col>
+                    </ons-row>
+                    <ons-col width="55%"> 
+                        Home@webitall.dk
+                      </ons-col>
+                      <ons-col width="45%">
+                      <span class="label label-blue label-contact">
+                      <icon class="fa fa-envelope-square fa-lg fa-fw"></icon>
+                        send email
+                        </span>
+                      </ons-col>
+                  </ons-row>
+
+
+                </ons-col>
+
+              </ons-row>
+            </ons-page>
+          </script>
+
+
+
+
+
+          <!-- Shows the about page -->
+          <script type="text/ons-template" id="about.html">
+          <ons-page>
+              <ons-toolbar>
+                <div class="left logo">
+                <ons-toolbar-button ng-click="menu.toggleMenu()">
+                  <img src="images/icons/icon_29749.png" title="Unicorn" height="39px" class="ng-scope" style="height: 60px; margin-top: 10px;" />
+                </ons-toolbar-button>
+                </div>
+                <div class="center logo">
+                  <h1>uniCRM</h1>
+                </div>
+                <div class="right logo center">
+                  <ons-toolbar-button ng-click="menu.toggleMenu()">
+                    <ons-icon icon="bars openMenu"></ons-icon>
+                  </ons-toolbar-button>
+                </div>
+              </ons-toolbar>
+
+            <ons-row class="margin padding">
+              <ons-col align="center">
+                <p data-localize="about">This is a test. About.html</p>
+              </ons-col>
+            </ons-row>
+          </ons-page>
+          </script>
+
+
+
+
+
+          <!-- Shows the change language page -->
+          <script type="text/ons-template" id="language.html">
+            <ons-page>
+              <ons-toolbar>
+                <div class="left logo">
+                <ons-toolbar-button ng-click="menu.toggleMenu()">
+                  <img src="images/icons/icon_29749.png" title="Unicorn" height="39px" class="ng-scope" style="height: 60px; margin-top: 10px;" />
+                </ons-toolbar-button>
+                </div>
+                <div class="center logo">
+                  <h1>uniCRM</h1>
+                </div>
+                <div class="right logo center">
+                  <ons-toolbar-button ng-click="menu.toggleMenu()">
+                    <ons-icon icon="bars openMenu"></ons-icon>
+                  </ons-toolbar-button>
+                </div>
+              </ons-toolbar>
+
+              <ons-row class="margin padding">
+                <ons-col align="center">
+                  <p data-localize="language"></p>
+                  <a onclick="chlangEN();"><img src="images/icons/flags/gb.png" /></a>
+                  <a onclick="chlangDK();"><img src="images/icons/flags/dk.png" /></a>
+                  <p data-localize="aLang"></p>
+                </ons-col>
+              </ons-row>
+            </ons-page>
+          </script>
+
+
+
+
+
+        <script type="text/javascript">
+        $( document ).ready(function() {
+          getLang();
+          getActivities();
+        });
+        </script>
+    </ons-page>
+  </ons-navigator>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="height=device-height, width=device-width" />
+  <title>myApp</title>  
+  
+  <link rel="stylesheet" href="onsenui.css">  
+  <link rel="stylesheet" href="onsen-css-components.css">  
+  <link rel="stylesheet" href="app.css"/>
+
+  <script src="angular/angular.js"></script>    
+  <script src="onsenui.js"></script>
+  <script src="jquery-1.11.1.min.js"></script>
+  <script src="jquery.localize.min.js"></script> 
+  <script src="fastclick.js"></script> 
+
+  <script src="cordova.js"></script>
+  <script src="app.js"></script>
+  <script src="main.js"></script>
+  
+</head>
+
+<body>
+
+<ons-page>
+
+  <ons-toolbar>
+    <div class="center logo" style="background-color: #212a31;">
+      <h1><img src="images/icons/icon_29749.png" title="Unicorn" height="39px" />uniCRM</h1>
+    </div>
+  </ons-toolbar>
+
+  <ons-row class="margin">
+    <ons-col align="center">
+      <div>
+      </div>
+      <form id="login_form">
+        <div style="text-align: center">
+          <section style="padding: 8px">
+            <input type="text" class="text-input input_form" ng-model="text" placeholder="Brugernavn / Email" id="email" name="email" style="display: block; width: 100%">
+          </section>
+          <section style="padding: 8px">
+            <input type="password" class="text-input input_form" ng-model="password" placeholder="Kodeord" id="password" name="password" style="display: block; width: 100%">
+          </section>
+          <div class="error"></div>
+          <section style="padding: 0 8px 8px">
+            <ons-button modifier="large" value="LOG IND" onclick="login();" data-localize="login">Login</ons-button>
+          </section>
+          <section style="padding: 8px; float:right;">
+            <text data-localize="rEmail">Remember Email</text> <input type="checkbox" id="rEmail">
+          </section>
+        </div>
+      </form>
+    </ons-col>
+  </ons-row>
+  <ons-row align="bottom">
+    <ons-col align="center">
+        <section style="padding:8px;">
+        <hr>
+          <p data-localize="language">Choose language here</p>
+          <a onclick="chlangEN();"><img src="images/icons/flags/gb.png" /></a>
+          <a onclick="chlangDK();"><img src="images/icons/flags/dk.png" /></a>
+          <p data-localize="aLang"></p>
+      </section>
+      </ons-col>
+  </ons-row>
+</ons-page>
+
+<script type="text/javascript">
+  $( document ).ready(function() {
+      getLang();
+      setUp();
+});
+</script>
+
+</body>
+</html>

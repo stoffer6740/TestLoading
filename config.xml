@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.cbjerregaard.unicrm"
+        version     = "0.5.0" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>uniCRM</name>
+
+    <description>
+        Application for uniCRM for Webitall.
+    </description>
+
+    <author href="www.c-bjerregaard.dk" email="contact@c-bjerregaard.dk">
+        Christoffer Bjerregaard | Lars Mogensen
+    </author>
+
+    <!-- Sets what page the application starts at -->
+    <content src="index.html" />
+
+    <!-- Build platforms
+    <gap:platform name="ios" />
+    <gap:platform name="winphone" />-->
+    <gap:platform name="android" />
+
+    <!-- Icons for Android -->
+    <icon src="res/icon/android/ldpi.png"   gap:platform="android"    gap:qualifier="ldpi" />
+    <icon src="res/icon/android/mdpi.png"   gap:platform="android"    gap:qualifier="mdpi" />
+    <icon src="res/icon/android/hdpi.png"   gap:platform="android"    gap:qualifier="hdpi" />
+    <icon src="res/icon/android/xhdpi.png"  gap:platform="android"    gap:qualifier="xhdpi" />
+    <icon src="res/icon/android/xxxhdpi.png"  gap:platform="android"    gap:qualifier="xxxhdpi" />
+
+    <!-- Permissions and preferences -->
+    <preference name="permissions" value="none"/>
+    <!-- removes the actionbar at the top -->
+
+    <!-- add features to your permissions -->
+
+    <!-- defines what servers the app can fetch data from with ex. AJAX-->
+    <access origin="http://dev.unicrm.dk/*" subdomains="true" />
+
+    <!-- Enable debugging in Gapdebug -->
+</widget>
